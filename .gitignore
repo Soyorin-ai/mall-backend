@@ -1,0 +1,52 @@
+# compiled output
+/dist
+/node_modules
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# testing
+/coverage
+*.lcov
+
+# environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# build files
+*.tsbuildinfo
+
+# temporary files
+*.tmp
+.cache
+.temp
+
+# uploads
+uploads/
+public/uploads/
+
+# logs
+logs/
+*.log
