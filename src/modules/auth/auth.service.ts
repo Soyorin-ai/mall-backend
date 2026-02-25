@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { User } from '../user/entities/user.entity';
-import { ErrorCode, ERROR_MESSAGES } from '../../../common/constants/error-code.constants';
+import { ErrorCode, ERROR_MESSAGES } from '../../common/constants/error-code.constants';
 
 /**
  * 认证服务
@@ -150,12 +150,12 @@ export class AuthService {
     const accessToken = this.jwtService.sign(payload, {
       expiresIn: process.env.JWT_EXPIRES_IN || '2h',
       secret: this.getJwtSecret(),
-    });
+    } as any);
 
     const refreshToken = this.jwtService.sign(payload, {
       expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
       secret: this.getJwtRefreshSecret(),
-    });
+    } as any);
 
     // 返回用户信息和 Token
     return {

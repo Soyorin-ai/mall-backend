@@ -9,6 +9,10 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { HealthController } from './common/health.controller';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { ProductModule } from './modules/product/product.module';
+import { CartModule } from './modules/cart/cart.module';
+import { OrderModule } from './modules/order/order.module';
+import { PaymentModule } from './modules/payment/payment.module';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 
 @Module({
@@ -47,6 +51,10 @@ import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
     }),
     AuthModule,
     UserModule,
+    ProductModule,
+    CartModule,
+    OrderModule,
+    PaymentModule,
   ],
   controllers: [HealthController],
   providers: [

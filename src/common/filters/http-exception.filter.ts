@@ -6,8 +6,9 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
+import { Response, Request } from 'express';
 import { ResponseDto } from '../dtos/response.dto';
-import { ErrorCode, ERROR_MESSAGES } from '../constants/error-code.constants';
+import { ERROR_MESSAGES } from '../constants/error-code.constants';
 
 /**
  * 全局异常过滤器
@@ -22,8 +23,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
-    let code = ErrorCode.INTERNAL_SERVER_ERROR;
-    let message = ERROR_MESSAGES[ErrorCode.INTERNAL_SERVER_ERROR];
+    let code = HttpStatus.INTERNAL_SERVER_ERROR;
+    let message = ERROR_MESSAGES[HttpStatus.INTERNAL_SERVER_ERROR] || '服务器错误';
 
     if (exception instanceof HttpException) {
       status = exception.getStatus();
@@ -40,7 +41,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
         message = exceptionMessage;
       }
 
-      code = status;
+      if (code === HttpStatus.INTERNAL_SERVER_ERROR) {
+        code = status;
+      }
     } else if (exception instanceof Error) {
       message = exception.message;
       this.logger.error(
@@ -48,7 +51,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
         exception.stack,
       );
     } else {
-      message = ERROR_MESSAGES[ErrorCode.INTERNAL_SERVER_ERROR];
       this.logger.error(
         `${request.method} ${request.url}`,
         exception,

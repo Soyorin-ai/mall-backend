@@ -4,24 +4,24 @@
 export class ResponseDto<T = any> {
   code: number;
   message: string;
-  data: T;
+  data: T | null;
   timestamp: number;
 
   static success<T>(data: T, message: string = 'success'): ResponseDto<T> {
-    return {
-      code: 200,
-      message,
-      data,
-      timestamp: Math.floor(Date.now() / 1000),
-    };
+    const dto = new ResponseDto<T>();
+    dto.code = 200;
+    dto.message = message;
+    dto.data = data;
+    dto.timestamp = Math.floor(Date.now() / 1000);
+    return dto;
   }
 
-  static error(code: number, message: string, data: T = null): ResponseDto<T> {
-    return {
-      code,
-      message,
-      data,
-      timestamp: Math.floor(Date.now() / 1000),
-    };
+  static error<T = any>(code: number, message: string, data: T | null = null): ResponseDto<T> {
+    const dto = new ResponseDto<T>();
+    dto.code = code;
+    dto.message = message;
+    dto.data = data;
+    dto.timestamp = Math.floor(Date.now() / 1000);
+    return dto;
   }
 }
